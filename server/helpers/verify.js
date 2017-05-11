@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const methods = {};
 
 methods.auth = (data) => {
-  let token = jwt.sign(data, process.env.SECRET_KEYS, {expiresIn: '3h'});
+  let token = jwt.sign(data, process.env.SECRET_KEYS, {expiresIn: '12h'});
   return token
 }
 
@@ -25,6 +25,14 @@ methods.isLogin = (req, res, next) => {
       })
     }
   })
+}
+
+methods.decode = (token) => {
+  try {
+    return jwt.verify(token, process.env.SECRET_KEYS)
+  } catch(err) {
+    return err;
+  }
 }
 
 module.exports = methods;

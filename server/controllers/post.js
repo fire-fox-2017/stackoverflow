@@ -147,13 +147,20 @@ methods.deleteQuestion = (req, res, next) => {
       res.json({error: err, success: false});
     } else {
       console.log('post deleted');
-      User.findOneAndUpdate({ _id: post.userId }, {$pullAll: {postId: post._id}}, (err, user) => {
+      User.update({ _id: post.userId }, {$pullAll: [{postId: post._id}] }).exec((err, result) => {
         if(err) {
           res.json({error: err, success: false});
         } else {
-          res.json({post: post, user: user, success: true, msg: 'successfully delete post'});
+          res.json({result: result, success:true});
         }
       })
+      //   , (err, user) => {
+      //   if(err) {
+      //     res.json({error: err, success: false});
+      //   } else {
+      //     res.json({post: post, user: user, success: true, msg: 'successfully delete post'});
+      //   }
+      // })
     }
   })
 }

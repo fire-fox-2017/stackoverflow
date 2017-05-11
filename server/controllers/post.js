@@ -140,7 +140,7 @@ methods.getAllQuestion = (req, res, next) => {
   })
 }
 
-methods.deleteQuestion = (req, res, next) => {
+methods.deleteQuestion = (req, res, next) => { // masih belum jalan delete dari postId model user
   let postId = req.params.postId;
   Post.findByIdAndRemove(postId, (err, post) => {
     if(err) {

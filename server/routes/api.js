@@ -23,8 +23,10 @@ router.get('/question/:postId', auth.isLogin, post.getOneQuestion);
 // post new question
 router.post('/question/create/:userId', auth.isLogin, post.createQuestion);
 
-// delete question
+// delete
 router.delete('/question/delete/:postId', auth.isLogin, post.deleteQuestion);
+router.delete('/answer/delete/:postId/:answerId', post.deleteAnswer)
+
 
 // answer
 router.post('/answer/create/:postId', auth.isLogin, post.createAnswer);

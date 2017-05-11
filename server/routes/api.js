@@ -30,6 +30,7 @@ router.post('/answer/create/:postId', auth.isLogin, post.createAnswer);
 
 // votes
 router.post('/vote/question/:postId', auth.isLogin, post.voteQuestion);
+router.post('/vote/answer/:postId/:answerId', auth.isLogin, post.voteAnswer);
 
 
 

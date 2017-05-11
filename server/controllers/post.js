@@ -74,16 +74,23 @@ methods.voteQuestion = (req, res, next) => {
 }
 
 methods.voteAnswer = (req, res, next) => {
-  let decoded = helperTo(req.headers.token);
+  let decoded = helperTo.decode(req.headers.token);
   let postId = req.params.postId;
   Post.findById(postId, (err, post) => {
     if(err) {
       res.json({error: err, success: false});
     } else {
+      console.log('masuk vote answer');
+      // let index = post.answers.findIndex(val => val._id == req.params.answerId);
+      // let voted = post.answers[index].votes.some(val => val.userId == decoded._id);
+      // [index].votes.some(val => val.userId == decoded._id);
+      // console.log(index)
+      // res.send(post)
       let answer = post.answers.id(req.params.answerId);
-      if(answer.votes.some((vote) => {return vote.userId == decoded._id})) {
-        res.json({msg: 'you already voted'});
+      if(answer.votes.some((vote)=> {return vote.user == decoded.id})) {
+        res.json({msg: 'you already voted', success: false});
         console.log('you already voted');
+        // res.json({ validated: false })
       } else {
         Post.findOneAndUpdate({ _id: postId, 'answers._id': req.params.answerId },
           {$push: {'answers.$.votes': {user: decoded._id, count: req.body.count} }},

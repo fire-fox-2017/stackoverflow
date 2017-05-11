@@ -18,8 +18,7 @@ let userSchema = new Schema({
   role: {
       type: String
   },
-  questionId: [{type: Schema.Types.ObjectId, ref: 'Question'}],
-  answerId: [{type: Schema.Types.ObjectId, ref: 'Answer'}],
+  postId: [{type: Schema.Types.ObjectId, ref: 'Post'}],
   voteId: [{type: Schema.Types.ObjectId, ref: 'Vote'}]
 })
 

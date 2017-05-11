@@ -3,7 +3,7 @@ let Schema = mongoose.Schema;
 
 let voteSchema = new Schema({
   userId: {type: Schema.Types.ObjectId, ref: 'User'},
-  count : {type: Number, min: -1, max: 1, default: 0}
+  count : {type: Number, enum: [1, -1]}
 })
 
 const Vote = mongoose.model('Vote', voteSchema);

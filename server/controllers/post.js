@@ -21,7 +21,7 @@ methods.createQuestion = (req, res, next) => {
         if(err) {
           res.json({error: err, success: false});
         } else {
-          res.json({post: post, success: true, msg: `user ${decoded.username} now has post(question) with id: ${post._id}`});
+          res.json({question: post, success: true, msg: `user ${decoded.username} now has question with id: ${post._id}`});
         }
       })
     }
@@ -47,6 +47,28 @@ methods.createAnswer = (req, res, next) => {
           res.json({success: true, msg: `answer for question with id ${post._id} has been created`});
         }
       })
+    }
+  })
+}
+
+methods.voteQuestion = (req, res, next) => {
+  let decoded = helperTo.decode(req.headers.token);
+  let postId = req.params.postId;
+  Post.findById(postId, (err, post) => {
+    if(err) {
+      res.json({error: err, success: true});
+    } else {
+      if(post.votes.some(vote => vote.userId == decoded._id)) {
+        res.status(403).send({msg: 'you can only vote once', success: false});
+      } else {
+        Post.findOneAndUpdate({ _id: post._id }, {$push: {votes: {count: req.body.count, userId: decoded._id}}}, {new: true}, (err, post) => {
+          if(err) {
+            res.json({error: err, success: false});
+          } else {
+            res.json({question: post, success: true});
+          }
+        })
+      }
     }
   })
 }
@@ -79,12 +101,12 @@ methods.voteAnswer = (req, res, next) => {
 
 
 
-methods.getAll = (req, res, next) => {
+methods.getAllQuestion = (req, res, next) => {
   Post.find({}, (err, post) => {
     if(err) {
       res.json({error: err, success: false});
     } else {
-      res.json({post: post, success: true, msg: 'successfully getting all posts data'});
+      res.json({questions: post, success: true, msg: 'successfully getting all posts data'});
     }
   })
 }

@@ -8,6 +8,8 @@ let userSchema = new Schema({
   },
   username: {
       type: String,
+      required: true,
+      unique: true,
       uniqueCaseInsensitive: true
   },
   password: {

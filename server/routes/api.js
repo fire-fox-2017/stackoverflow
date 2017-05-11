@@ -17,13 +17,14 @@ router.post('/user/signin', passport.authenticate('local', {session: false}), (r
 /* POST ROUTES */
 
 // get question
-router.get('/question', auth.isLogin, post.getAllQuestion);
+router.get('/question', auth.isLogin, post.getAllQuestionWithUserId);
+router.get('/question/:postId', auth.isLogin, post.getOneQuestion);
 
 // post new question
 router.post('/question/create/:userId', auth.isLogin, post.createQuestion);
 
 // delete question
-router.delete('/question/delete/:postId', auth.isLogin, post.delete);
+router.delete('/question/delete/:postId', auth.isLogin, post.deleteQuestion);
 
 // answer
 router.post('/answer/create/:postId', auth.isLogin, post.createAnswer);

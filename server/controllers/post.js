@@ -93,7 +93,7 @@ methods.voteAnswer = (req, res, next) => {
         // res.json({ validated: false })
       } else {
         Post.findOneAndUpdate({ _id: postId, 'answers._id': req.params.answerId },
-          {$push: {'answers.$.votes': {user: decoded._id, count: req.body.count} }},
+          {$push: {'answers.$.votes': {userId: decoded._id, count: req.body.count} }},
           {new: true}, (err, result) => {
             if(err) {
               res.json({error: err, success: false});
@@ -106,7 +106,29 @@ methods.voteAnswer = (req, res, next) => {
   })
 }
 
+methods.getAllQuestionWithUserId = (req, res, next) => {
+  Post.find({}).populate('userId')
+  .exec((err, questions) => {
+    if(err) {
+      res.json({error: err, success: false});
+    } else {
+      res.json({questions: questions, success: true});
+    }
+  })
+}
 
+methods.getOneQuestion = (req, res, next) => {
+  postId = req.params.postId;
+  Post.findOne({ _id: postId })
+  .populate('userId answers.userId')
+  .exec((err, question) => {
+    if(err) {
+      res.json({error: err, success: false});
+    } else {
+      res.json({question: question, success: true});
+    }
+  })
+}
 
 methods.getAllQuestion = (req, res, next) => {
   Post.find({}, (err, post) => {
@@ -118,7 +140,7 @@ methods.getAllQuestion = (req, res, next) => {
   })
 }
 
-methods.delete = (req, res, next) => {
+methods.deleteQuestion = (req, res, next) => {
   let postId = req.params.postId;
   Post.findByIdAndRemove(postId, (err, post) => {
     if(err) {
@@ -130,6 +152,25 @@ methods.delete = (req, res, next) => {
           res.json({error: err, success: false});
         } else {
           res.json({post: post, user: user, success: true, msg: 'successfully delete post'});
+        }
+      })
+    }
+  })
+}
+
+methods.deleteAnswer = (req, res, next) => {
+  let postId = req.params.postId;
+  Post.findById(postId, (err, post) => {
+    if(err) {
+      res.json({error: err, success: false});
+    } else {
+      post.answers.id(req.params.answerId).remove();
+      post.save((err) => {
+        if(err) {
+          res.json({error: err, success: false});
+        } else {
+          console.log('answer deleted');
+          res.json({post: post, success: true});
         }
       })
     }

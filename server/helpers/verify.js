@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const methods = {};
 
 methods.auth = (data) => {
-  let token = jwt.sign(data, process.env.SECRET_KEYS, {expiresIn: '12h'});
+  let token = jwt.sign(data, process.env.SECRET_KEYS);
   return token
 }
 

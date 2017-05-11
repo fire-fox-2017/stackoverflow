@@ -17,15 +17,21 @@ router.post('/user/signin', passport.authenticate('local', {session: false}), (r
 /* POST ROUTES */
 
 // get question
-router.get('/question', auth.isLogin, post.getAll);
+router.get('/question', auth.isLogin, post.getAllQuestion);
 
 // post new question
 router.post('/question/create/:userId', auth.isLogin, post.createQuestion);
 
-// post new answer
-router.post('/answer/create/:postId', auth.isLogin, post.createAnswer);
-
 // delete question
 router.delete('/question/delete/:postId', auth.isLogin, post.delete);
+
+// answer
+router.post('/answer/create/:postId', auth.isLogin, post.createAnswer);
+
+// votes
+router.post('/vote/question/:postId', auth.isLogin, post.voteQuestion);
+
+
+
 
 module.exports = router;

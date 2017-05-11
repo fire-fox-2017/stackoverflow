@@ -13,6 +13,13 @@ db.once('open', () => {
   console.log('-+- Mongo Database Connection established -+-');
 })
 
+//passport
+const userController = require('./controllers/user');
+const passport = require('passport');
+const Strategy = require('passport-local').Strategy;
+
+passport.use(new Strategy(userController.signin));
+
 app.set('port', process.env.PORT || 3000);
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}));

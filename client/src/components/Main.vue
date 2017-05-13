@@ -13,7 +13,7 @@
             <span class="cinema">{{question.content}}</span>
           </div>
           <div class="description">
-            <p></p>
+            <p>Votes Score: {{ question.votes.filter((val)=> {return val.count == 1}).length - question.votes.filter((val)=> {return val.count == -1}).length }}</p>
           </div>
           <div class="extra">
             

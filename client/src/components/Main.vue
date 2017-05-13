@@ -68,8 +68,10 @@ export default {
       {count: count}, 
       {headers: {token: self.$store.state.userToken}}).then(res => {
         alert('Vote done!');
+        window.location.reload()
     }).catch(err => {
       alert('Vote failed!');
+      window.location.reload()
     })
    },
   },

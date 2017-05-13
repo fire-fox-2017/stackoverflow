@@ -4,6 +4,7 @@ import Home from '@/components/Home'
 import Login from '@/components/Login'
 import Main from '@/components/Main'
 import Question from '@/components/Question'
+import Ask from '@/components/Ask'
 
 Vue.use(Router)
 
@@ -28,6 +29,11 @@ export default new Router({
       path: '/question/:id',
       name: 'Question',
       component: Question
+    },
+    {
+      path: '/ask',
+      name: 'Ask',
+      component: Ask
     }
   ]
 })

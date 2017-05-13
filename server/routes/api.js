@@ -21,7 +21,7 @@ router.get('/question', auth.isLogin, post.getAllQuestionWithUserId);
 router.get('/question/:postId', auth.isLogin, post.getOneQuestion);
 
 // post new question
-router.post('/question/create/:userId', auth.isLogin, post.createQuestion);
+router.post('/question/create/', auth.isLogin, post.createQuestion);
 
 // delete
 router.delete('/question/delete/:postId', auth.isLogin, post.deleteQuestion);

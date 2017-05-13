@@ -52,11 +52,12 @@ export default {
         username: self.username,
         password: self.password
       }).then((res) => {
-        localStorage.setItem('token', res.data);
+        console.log(res.data.token)
+        localStorage.setItem('token', res.data.token);
         localStorage.setItem('user', self.username);
         alert('login sukses');
-        self.$router.push({ path: '/' });
-        window.location.reload();
+        self.$router.push({ path: '/main' });
+        // window.location.reload();
       }).catch((err) => {
         console.log(err);
         alert('login failed');

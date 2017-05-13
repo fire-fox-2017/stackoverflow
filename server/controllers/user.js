@@ -31,7 +31,7 @@ methods.signin = (username, password, next) => {
       else if(pwh.verify(password, user.password)) {
         let userData = Object.assign({}, user.toJSON());
         next(null, {message: 'login sukses', token: verify.auth(userData), success: true, username: user.username});
-        // console.log(userData);
+        console.log(userData);
       } else {
         next(null, {message: 'password anda salah', success: false});
       }

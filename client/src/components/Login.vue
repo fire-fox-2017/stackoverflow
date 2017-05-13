@@ -11,16 +11,16 @@
         <div class="field">
           <div class="ui left icon input">
             <i class="user icon"></i>
-            <input type="text" name="username" placeholder="Username">
+            <input type="text" v-model="username" name="username" placeholder="Username">
           </div>
         </div>
         <div class="field">
           <div class="ui left icon input">
             <i class="lock icon"></i>
-            <input type="password" name="password" placeholder="Password">
+            <input type="password" v-model="password" name="password" placeholder="Password">
           </div>
         </div>
-        <div class="ui fluid large green submit button">Login</div>
+        <div @click="login()" class="ui fluid large green submit button">Login</div>
       </div>
 
       <div class="ui error message"></div>
@@ -28,7 +28,7 @@
     </form>
 
     <div class="ui message">
-      New to us? <a href="#">Sign Up</a>
+      Belum punya akun? <a href="#">Daftar Dulu</a>
     </div>
   </div>
 </div>

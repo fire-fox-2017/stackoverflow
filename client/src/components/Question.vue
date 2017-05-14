@@ -3,19 +3,29 @@
     <div class="ui divided items">
       <div class="item">
         <div class="content">
-          <a class="header">{{question.title}}</a>
+          <div class="meta">
+            <a class="ui tiny label">Asked by {{question.userId.name}}</a> 
+          </div>
+        
+          <a class="ui large header">{{question.title}}</a> 
           <div class="meta">
             <span class="cinema">{{question.content}}</span>
           </div>
           <div class="description">
-           <!--  <p>Votes Score: {{ question.votes.filter((val)=> {return val.count == 1}).length - question.votes.filter((val)=> {return val.count == -1}).length }}</p> -->
+          
+            <a data-tooltip="Question score based on user vote" class="ui tiny label grey"><i class="fa fa-question-circle ui" aria-hidden="true"></i>
+               {{ question.votes.filter((val)=> {return val.count == 1}).length - question.votes.filter((val)=> {return val.count == -1}).length }} 
+           </a>
+            
           </div>
+          <br>
+          <a href="#/main">Back to main</a>
         </div>
       </div>
     </div>
     
     <div class="ui comments">
-      <h3 class="ui dividing header">Answers</h3>
+      <h4 class="ui dividing header">Answers</h4>
       <div v-for="(answer, index) in question.answers" class="comment">
         <div class="content">
           <a class="author">{{answer.userId.name}}</a>
@@ -24,6 +34,9 @@
           </div>
           <div class="text">
             {{answer.content}}
+          </div>
+          <div class="text">
+            <a data-tooltip="Answer score based on user vote" class="ui tiny label grey"><i class="fa fa-star" aria-hidden="true"></i> {{ answer.votes.filter((val)=> {return val.count == 1}).length - answer.votes.filter((val)=> {return val.count == -1}).length }}</a>
           </div>
           <div class="actions">
             <a @click="voteAnswer(1, question.answers[index]._id, index)" class="reply"><i class="thumbs outline green up icon">
@@ -65,7 +78,8 @@ export default {
       title: '',
       content: '',
       loggedUser: this.$store.state.loggedUser,
-      loggedUserId: this.$store.state.loggedUserId
+      loggedUserId: this.$store.state.loggedUserId,
+      // name: this.$store.state.name
     };
   },
   methods: {
@@ -74,6 +88,7 @@ export default {
       axios.get('http://localhost:3000/api/question/'+this.$route.params.questionId, {headers: {token: localStorage.getItem('token')}})
       .then(res => {
         self.question = res.data.question;
+        console.log('ini adalah res.data.question.answers:')
         console.log(res.data.question.answers)
       }).catch(err => {
         console.log(err);
@@ -95,11 +110,14 @@ export default {
       axios.post(`http://localhost:3000/api/vote/answer/${this.$route.params.questionId}/${id}`, {
         count: countData
       }, {headers: {'token': self.$store.state.userToken}}).then(res => {
-        console.log(res.data.result.answers[answerIdx].votes)
-        console.log(self.$store.state.loggedUser)
-        alert('Vote answer done');
+        console.log(res)
+        // console.log(res.data.result.answers[answerIdx].votes)
+        // console.log(self.$store.state.loggedUser)
+        alert(`${res.data.msg}`);
+        // window.location.reload();
       }).catch(err => {
-        alert('you already vote for this answer');
+        alert('error happened in giving a vote to the answer');
+        console.log(err);
       })
     },
     deleteAnswer(data) {

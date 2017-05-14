@@ -8,25 +8,42 @@
   
       <div v-if="questions.length > 0" v-for="question in questions" class="item">
         <div class="content">
-          <a class="header"><router-link :to="{name: 'Question', params: {questionId: question._id}}">{{ question.title }}</router-link></a>
           <div class="meta">
-            <span class="cinema">{{question.content}}</span>
+            <a class="ui tiny label">Asked by {{question.userId.name}}</a>
           </div>
+          <a class="ui large header"><router-link :to="{name: 'Question', params: {questionId: question._id}}">{{ question.title }}</router-link></a> 
+
+          <div class="meta">
+            <p class="cinema">{{question.content}}</p>
+          </div>
+
           <div class="description">
-            <p>Votes Score: {{ question.votes.filter((val)=> {return val.count == 1}).length - question.votes.filter((val)=> {return val.count == -1}).length }}</p>
+            <a data-tooltip="Question score based on user vote" class="ui tiny label grey"><i class="fa fa-question-circle ui" aria-hidden="true"></i>
+               {{ question.votes.filter((val)=> {return val.count == 1}).length - question.votes.filter((val)=> {return val.count == -1}).length }} 
+           </a>
+           <a data-tooltip="Total answer that user provided on this question" class="ui tiny label grey" >
+           <i class="fa fa-comments-o" aria-hidden="true"></i>
+               {{question.answers.length}}
+           </a>
           </div>
           <div class="extra">
             
             <div v-if="loggedUser">
-                <router-link class="ui right floated primary  button" :to="{name: 'Question', params: {questionId: question._id}}">Answer this Question <i class="right chevron icon"></i></router-link>
-              <span @click="vote(1, question._id)" class="left floated ui green button">
-                <i class="thumbs up icon">
-              </i>upvote
-              </span>
-              <span @click="vote(-1, question._id)" class="left floated ui red button">
-                <i class="thumbs down icon">
-              </i>downvote
-              </span>
+              <router-link class="ui right floated primary tiny label blue" :to="{name: 'Question', params: {questionId: question._id}}">Answer this Question
+              <i class="right chevron icon"></i>
+              </router-link>
+              <router-link class="ui right floated primary tiny label blue" :to="{name: 'EditQuestion', params: {questionId: question._id}}">Edit this Question
+              <i class="right chevron icon"></i>
+              </router-link>
+
+              <a data-tooltip="upvote question" @click="vote(1, question._id)" class="ui tiny green label">
+                <i class="thumbs up icon"></i>
+              </a>
+
+              <a data-tooltip="downvote question" @click="vote(-1, question._id)" class="ui tiny label red">
+                <i class="thumbs down icon"></i>
+              </a>
+              
             </div>
             
           </div>
@@ -50,7 +67,7 @@ export default {
       msg: 'Welcome to Hacktiv Overflow',
       questions: [],
       loggedUser: this.$store.state.loggedUser,
-      voteCount: []
+      voteCount: [],
     };
   },
   methods: {

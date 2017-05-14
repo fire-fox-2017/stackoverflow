@@ -27,6 +27,8 @@ router.post('/question/create/', auth.isLogin, post.createQuestion);
 router.delete('/question/delete/:postId', auth.isLogin, post.deleteQuestion);
 router.delete('/answer/delete/:postId/:answerId', post.deleteAnswer)
 
+// edit question
+router.put('/question/edit/:postId', auth.isLogin, post.edit);
 
 // answer
 router.post('/answer/create/:postId', auth.isLogin, post.createAnswer);

@@ -2,6 +2,7 @@
   <div id="ask-form">
     <div class="ui form">
       <h3>Ask a Question Form</h3>
+
       <div class="field">
         <label for="title">Judul pertanyaan kamu:</label>
         <input type="text" placeholder="Beri judul pertanyaanmu singkat padat jelas" class="input" v-model="title">
@@ -12,6 +13,7 @@
         <button @click="ask()" class="ui primary button">
         Submit
         </button>
+        <a href="#/main"><button class="ui red button">Back to main</button></a>
       </div>
     </div>
   </div>

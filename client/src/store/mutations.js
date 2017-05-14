@@ -1,7 +1,8 @@
 export const state = {
   userToken: localStorage.getItem('token') || null,
   isLogin: false,
-  loggedUser: localStorage.getItem('user') || null
+  loggedUser: localStorage.getItem('user') || null,
+  loggedUserId: localStorage.getItem('userId') || null
 }
 
 export const mutations = {

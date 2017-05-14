@@ -26,9 +26,9 @@
             {{answer.content}}
           </div>
           <div class="actions">
-            <a @click="voteAnswer(1, question.answers[index]._id)" class="reply"><i class="thumbs outline green up icon">
+            <a @click="voteAnswer(1, question.answers[index]._id, index)" class="reply"><i class="thumbs outline green up icon">
               </i>Upvote answer</a>
-            <a @click="voteAnswer(-1, question.answers[index]._id)" class="reply"><i class="thumbs outline yellow down icon">
+            <a @click="voteAnswer(-1, question.answers[index]._id, index)" class="reply"><i class="thumbs outline yellow down icon">
               </i>Downvote answer</a>
             <a @click="deleteAnswer(question.answers[index])" class="reply"><i class="trash outline red icon"></i></a>
                
@@ -64,7 +64,8 @@ export default {
       question: [],
       title: '',
       content: '',
-      loggedUser: this.$store.state.loggedUser
+      loggedUser: this.$store.state.loggedUser,
+      loggedUserId: this.$store.state.loggedUserId
     };
   },
   methods: {
@@ -89,14 +90,16 @@ export default {
         alert('answer failed');
       })
     },
-    voteAnswer(countData, id) {
+    voteAnswer(countData, id, answerIdx) {
       let self = this;
       axios.post(`http://localhost:3000/api/vote/answer/${this.$route.params.questionId}/${id}`, {
         count: countData
       }, {headers: {'token': self.$store.state.userToken}}).then(res => {
+        console.log(res.data.result.answers[answerIdx].votes)
+        console.log(self.$store.state.loggedUser)
         alert('Vote answer done');
       }).catch(err => {
-        alert('Vote failed');
+        alert('you already vote for this answer');
       })
     },
     deleteAnswer(data) {

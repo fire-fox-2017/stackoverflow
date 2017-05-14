@@ -70,8 +70,8 @@ export default {
         alert('Vote done!');
         window.location.reload()
     }).catch(err => {
-      alert('Vote failed!');
-      window.location.reload()
+      alert('You already vote!');
+      // window.location.reload()
     })
    },
   },

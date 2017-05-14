@@ -59,6 +59,7 @@ methods.voteQuestion = (req, res, next) => {
       res.json({error: err, success: true});
     } else {
       if(post.votes.some(vote => vote.userId == decoded._id)) {
+        console.log('you can only vote once!');
         res.status(403).send({msg: 'you can only vote once', success: false});
       } else {
         Post.findOneAndUpdate({ _id: post._id }, {$push: {votes: {count: req.body.count, userId: decoded._id}}}, {new: true}, (err, post) => {

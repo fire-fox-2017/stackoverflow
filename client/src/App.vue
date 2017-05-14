@@ -26,10 +26,10 @@ export default {
       'ifLogin'
     ]),
     logout() {
+      this.$router.push({ path: '/' });
       if(this.$store.state.isLogin) {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
-        // self.$router.push({ path: '/' });
         console.log('sukses logout')
       }
     }

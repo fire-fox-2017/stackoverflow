@@ -8,7 +8,7 @@
   
       <div v-if="questions.length > 0" v-for="question in questions" class="item">
         <div class="content">
-          <a class="header"><router-link :to="{name: 'Question', params: {id: question._id}}">{{ question.title }}</router-link></a>
+          <a class="header"><router-link :to="{name: 'Question', params: {questionId: question._id}}">{{ question.title }}</router-link></a>
           <div class="meta">
             <span class="cinema">{{question.content}}</span>
           </div>
@@ -18,7 +18,7 @@
           <div class="extra">
             
             <div v-if="loggedUser">
-                <router-link class="ui right floated primary  button" :to="{name: 'Question', params: {id: question._id}}">Answer this Question <i class="right chevron icon"></i></router-link>
+                <router-link class="ui right floated primary  button" :to="{name: 'Question', params: {questionId: question._id}}">Answer this Question <i class="right chevron icon"></i></router-link>
               <span @click="vote(1, question._id)" class="left floated ui green button">
                 <i class="thumbs up icon">
               </i>upvote
@@ -86,5 +86,6 @@ export default {
     width: 50%;
     margin: 0 auto;
     padding-top: 60px;
+    padding-bottom: 60px;
   }
 </style>

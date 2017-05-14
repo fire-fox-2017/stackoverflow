@@ -5,6 +5,8 @@ import Login from '@/components/Login'
 import Main from '@/components/Main'
 import Question from '@/components/Question'
 import Ask from '@/components/Ask'
+import Register from '@/components/Register'
+import EditQuestion from '@/components/EditQuestion'
 
 Vue.use(Router)
 
@@ -34,6 +36,16 @@ export default new Router({
       path: '/ask',
       name: 'Ask',
       component: Ask
+    },
+    {
+      path: '/register',
+      name: 'Regiter',
+      component: Register
+    },
+    {
+      path: '/question/edit/:questionId',
+      name: 'EditQuestion',
+      component: EditQuestion
     }
   ]
 })

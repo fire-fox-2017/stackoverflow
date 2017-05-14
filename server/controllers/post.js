@@ -88,9 +88,14 @@ methods.voteAnswer = (req, res, next) => {
       // console.log(index)
       // res.send(post)
       let answer = post.answers.id(req.params.answerId);
-      if(answer.votes.some((vote)=> {return vote.user == decoded.id})) {
-        res.json({msg: 'you already voted', success: false});
+      console.log(answer)
+      console.log(decoded)
+      // console.log(!answer.votes.some(vote => {return vote.userId == decoded.userId}))
+      if(answer.votes.some(vote => {return vote.userId == decoded._id})) {
+        res.json({msg: `Sorry, you already vote for this answer.`, success: false});
+
         console.log('you already voted');
+        console.log(answer.votes)
         // res.json({ validated: false })
       } else {
         Post.findOneAndUpdate({ _id: postId, 'answers._id': req.params.answerId },
@@ -99,7 +104,7 @@ methods.voteAnswer = (req, res, next) => {
             if(err) {
               res.json({error: err, success: false});
             } else {
-              res.json({result: result, success: true});
+              res.json({result: result, success: true, msg: 'Thank you for your vote. Now this answer will save your vote.'});
             }
           })
       }
@@ -181,6 +186,23 @@ methods.deleteAnswer = (req, res, next) => {
           res.json({post: post, success: true});
         }
       })
+    }
+  })
+}
+
+methods.edit = (req, res, next) => {
+  Post.findOne({_id: req.params.postId}, (err, post) => {
+    if(err) {
+      res.json({error: err, success: false});
+    } else {
+      post.title = req.body.title ? req.body.title : post.title;
+      post.content = req.body.content ? req.body.content : post.content;
+      // user.name = req.body.name ? req.body.name : user.name;
+      // user.username = req.body.username ? req.body.username : user.username;
+      // user.password = req.body.password ? pwh.generate(req.body.password) : user.password;
+      // user.role = req.body.role ? req.body.role : user.role;
+      post.save();
+      res.json({post: post, success: true});
     }
   })
 }

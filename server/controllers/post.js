@@ -153,7 +153,7 @@ methods.deleteQuestion = (req, res, next) => { // masih belum jalan delete dari 
       res.json({error: err, success: false});
     } else {
       console.log('post deleted');
-      User.update({ _id: post.userId }, {$pullAll: [{postId: post._id}] }).exec((err, result) => {
+      User.update({ _id: post.userId }, {$pull: {postId: post._id} }).exec((err, result) => {
         if(err) {
           res.json({error: err, success: false});
         } else {

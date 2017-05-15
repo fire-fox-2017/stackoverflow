@@ -2,11 +2,16 @@
   <div id="app">
   <div class="ui blue fixed inverted menu"> 
     <div class="ui container"> 
-      <a href="#" class="header item">  
+      <a href="#" class="header item">
+      <i class="fa fa-bullhorn" aria-hidden="true"></i>
+  
         Hacktiv Overflow 
       </a>
-      <a v-if="loggedUser" href="#" class="header item"> 
-        Welcome, {{this.$store.state.name}} 
+      <a v-if="loggedUser" class="header item">
+      <router-link :to="{name: 'Profile', params: {username: loggedUser}}">
+      Welcome, {{this.$store.state.name}} 
+      </router-link> 
+        
       </a>
       <a v-if="loggedUser" href="#/ask" class="header item"> 
         Post a Question
@@ -54,5 +59,7 @@ export default {
 </script>
 
 <style>
-
+  i.fa {
+    padding-right: 10px;
+  }
 </style>

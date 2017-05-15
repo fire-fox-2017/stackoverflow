@@ -4,7 +4,8 @@
       <div class="item">
         <div class="content">
           <div class="meta">
-            <a class="ui tiny label">Asked by {{question.userId.name}}</a> 
+            <a v-if="question.userId.name == name" class="ui tiny label">Asked by you</a>
+            <a v-else class="ui tiny label" >Asked by {{ question.userId.name}}</a>
           </div>
         
           <a class="ui large header">{{question.title}}</a> 
@@ -19,7 +20,7 @@
             
           </div>
           <br>
-          <a href="#/main">Back to main</a>
+          <a class="ui label green" href="#/main">Back to main</a>
         </div>
       </div>
     </div>
@@ -43,7 +44,7 @@
               </i>Upvote answer</a>
             <a @click="voteAnswer(-1, question.answers[index]._id, index)" class="reply"><i class="thumbs outline yellow down icon">
               </i>Downvote answer</a>
-            <a @click="deleteAnswer(question.answers[index])" class="reply"><i class="trash outline red icon"></i></a>
+            <a data-tooltip="delete this answer" v-if="loggedUserId == question.answers[index].userId._id || question.userId.username == loggedUser" @click="deleteAnswer(question.answers[index])" class="reply"><i class="trash outline red icon"></i></a>
                
           </div>
         </div>
@@ -79,7 +80,7 @@ export default {
       content: '',
       loggedUser: this.$store.state.loggedUser,
       loggedUserId: this.$store.state.loggedUserId,
-      // name: this.$store.state.name
+      name: this.$store.state.name
     };
   },
   methods: {
@@ -88,8 +89,10 @@ export default {
       axios.get('http://localhost:3000/api/question/'+this.$route.params.questionId, {headers: {token: localStorage.getItem('token')}})
       .then(res => {
         self.question = res.data.question;
-        console.log('ini adalah res.data.question.answers:')
-        console.log(res.data.question.answers)
+        console.log('ini adalah res.data.question:')
+        console.log(res.data.question)
+        console.log(this.loggedUser)
+        // console.log(res.data.question.userId._id)
       }).catch(err => {
         console.log(err);
       })
@@ -114,7 +117,7 @@ export default {
         // console.log(res.data.result.answers[answerIdx].votes)
         // console.log(self.$store.state.loggedUser)
         alert(`${res.data.msg}`);
-        // window.location.reload();
+        window.location.reload();
       }).catch(err => {
         alert('error happened in giving a vote to the answer');
         console.log(err);

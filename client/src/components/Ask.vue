@@ -41,6 +41,7 @@ export default {
         alert('You created new question');
         // self.$route.router.go('Main');
         window.location.href = 'http://localhost:8080/#/main';
+        console.log(res);
       }).catch(err => {
         alert('Create new question failed');
         window.location.reload()

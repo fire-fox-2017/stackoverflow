@@ -1,1 +1,3 @@
-# stackoverflow
+# StickStack
+
+StackOverflow clone

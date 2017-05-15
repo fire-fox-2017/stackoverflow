@@ -8,10 +8,7 @@
         Hacktiv Overflow 
       </a>
       <a v-if="loggedUser" class="header item">
-      <router-link :to="{name: 'Profile', params: {username: loggedUser}}">
-      Welcome, {{this.$store.state.name}} 
-      </router-link> 
-        
+      Welcome, {{this.$store.state.name}}
       </a>
       <a v-if="loggedUser" href="#/ask" class="header item"> 
         Post a Question
